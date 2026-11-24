@@ -1,0 +1,14 @@
+# GEOG 524 demonstration data
+# Daily observations from two illustrative environmental monitoring sites.
+# Columns: date, station, temperature_C, precipitation_mm
+date,station,temperature_C,precipitation_mm
+2026-09-01,Coastal_A,14.2,3.4
+2026-09-02,Coastal_A,15.1,0.0
+2026-09-03,Coastal_A,13.8,8.2
+2026-09-04,Coastal_A,14.6,1.1
+2026-09-05,Coastal_A,16.0,0.0
+2026-09-01,Inland_B,12.4,0.0
+2026-09-02,Inland_B,13.7,0.0
+2026-09-03,Inland_B,12.9,2.6
+2026-09-04,Inland_B,14.1,0.0
+2026-09-05,Inland_B,15.3,0.0

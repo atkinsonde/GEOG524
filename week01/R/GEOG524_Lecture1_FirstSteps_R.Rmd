@@ -1,0 +1,86 @@
+---
+title: "GEOG 524 — Lecture 1: first steps with R"
+output: html_notebook
+---
+
+# Purpose
+
+Inspect a small text file, read it into an R data frame, and create a simple plot. This is an orientation demonstration of file ingestion and data structure.
+
+# 1. Where is R looking?
+
+```{r}
+getwd()
+list.files()
+```
+
+# 2. Choose a file location
+
+Download `example_observations.txt` and put it in the working directory, or edit the path below. If it is in a subfolder, include that folder in the path.
+
+```{r}
+filename <- "example_observations.txt"
+# Example:
+# filename <- "data/example_observations.txt"
+
+file.exists(filename)
+```
+
+# 3. Inspect the raw file before reading it
+
+```{r}
+file.info(filename)$size
+readLines(filename, n = 12)
+```
+
+Questions: Is there a header? What separates fields? Are there comment lines? What units and missing-value conventions are used?
+
+# 4. Read the observations
+
+```{r}
+observations <- read.csv(
+  filename,
+  comment.char = "#",
+  stringsAsFactors = FALSE
+)
+observations$date <- as.Date(observations$date)
+head(observations)
+```
+
+# 5. Inspect the data structure
+
+```{r}
+dim(observations)
+str(observations)
+summary(observations)
+```
+
+# 6. Create a simple plot
+
+```{r}
+station_names <- unique(observations$station)
+plot(
+  NA,
+  xlim = range(observations$date),
+  ylim = range(observations$temperature_C),
+  xlab = "Date",
+  ylab = "Temperature (°C)",
+  main = "Illustrative daily temperatures"
+)
+for (station_name in station_names) {
+  this_station <- observations[observations$station == station_name, ]
+  lines(this_station$date, this_station$temperature_C, type = "b", pch = 16)
+}
+legend("topleft", legend = station_names, lty = 1, pch = 16, bty = "n")
+```
+
+# 7. Discussion
+
+- What if the file were tab-delimited?
+- What if there were no header row?
+- What if missing values were coded as `-999`?
+- What if temperature were in Fahrenheit?
+
+# Summary
+
+We located a file, inspected its raw structure, read it into a data object, checked its dimensions and types, and created a plot. The same workflow applies to much larger and more complex environmental datasets.
